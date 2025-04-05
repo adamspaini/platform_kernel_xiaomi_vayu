@@ -8,13 +8,13 @@ objdir="${kernel_dir}/out"
 anykernel=$HOME/anykernel
 builddir="${kernel_dir}/build"
 ZIMAGE=$kernel_dir/out/arch/arm64/boot/Image
-kernel_name="SkylineKernel_vayu_"
+kernel_name="GoreKernel_vayu_"
 zip_name="$kernel_name$(date +"%Y%m%d").zip"
 CLANG_DIR=tc/clang
 export CONFIG_FILE="vayu_user_defconfig"
 export ARCH="arm64"
-export KBUILD_BUILD_HOST=gxc2356
-export KBUILD_BUILD_USER=home
+export KBUILD_BUILD_HOST=@adams4d13
+export KBUILD_BUILD_USER=arch-linux
 
 export PATH="$CLANG_DIR/bin:$PATH"
 
