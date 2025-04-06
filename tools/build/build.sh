@@ -78,7 +78,7 @@ compile() {
         HOSTLD=ld.lld \
         LLVM=1 LLVM_IAS=1 \
         CC="ccache clang" \
-        "$@"
+        "$1"
     else
         make -j$(nproc --all) \
         O=${objdir} \
@@ -86,7 +86,7 @@ compile() {
         SUBARCH=arm64 \
         CROSS_COMPILE=aarch64-linux-android- \
         CROSS_COMPILE_ARM32=arm-linux-androideabi- \
-        "$@"
+        "$1"
     fi
 }
 
