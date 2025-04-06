@@ -4,6 +4,7 @@ sudo apt-get update
 sudo apt update 
 sudo apt install ccache
 sudo apt install python2
+sudo apt install python-is-python2
 sudo apt install python2-dev
 sudo apt-get install lld
 sudo apt-get install llvm
