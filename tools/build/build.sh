@@ -26,14 +26,6 @@ RED='\033[0;31m'
 LRD='\033[1;31m'
 LGR='\033[1;32m'
 
-# Comprobación de Python 2
-if command -v python2 >/dev/null 2>&1; then
-    export PYTHON=python2
-else
-    echo -e "${RED}python2 no está instalado. Abortando...${NC}"
-    exit 1
-fi
-
 # Establecer PATH de acuerdo al toolchain
 if [[ "$TOOLCHAIN" == "clang" ]]; then
     export PATH="$CLANG_DIR/bin:$PATH"
@@ -56,16 +48,18 @@ else
     exit 1
 fi
 
-make_defconfig() {
-    echo -e ${LGR}"########### Generando Defconfig ############"${NC}
-    make -s ARCH=${ARCH} O=${objdir} ${CONFIG_FILE} -j$(nproc --all) PYTHON=${PYTHON}
+make_defconfig()
+{
+    START=$(date +"%s")
+    echo -e ${LGR} "########### Generating Defconfig ############${NC}"
+    make -s ARCH=${ARCH} O=${objdir} ${CONFIG_FILE} -j$(nproc --all)
 }
 
 compile() {
+
     cd ${kernel_dir}
-    echo -e ${LGR}"######### Compilando kernel con ${TOOLCHAIN^^} #########${NC}"
-    if [[ "$TOOLCHAIN" == "clang" ]]; then
-        make -j$(nproc --all) \
+    echo -e ${LGR} "######### Compiling kernel #########${NC}"
+    make -j$(nproc --all) \
         O=${objdir} \
         ARCH=arm64 \
         SUBARCH=arm64 \
@@ -86,8 +80,7 @@ compile() {
         HOSTLD=ld.lld \
         LLVM=1 LLVM_IAS=1 \
         CC="ccache clang" \
-        PYTHON=${PYTHON} \
-        "$1"
+        "$@"
     else
         make -j$(nproc --all) \
         O=${objdir} \
@@ -95,8 +88,7 @@ compile() {
         SUBARCH=arm64 \
         CROSS_COMPILE=aarch64-linux-android- \
         CROSS_COMPILE_ARM32=arm-linux-androideabi- \
-        PYTHON=${PYTHON} \
-        "$1"
+        "$@"
     fi
 }
 
