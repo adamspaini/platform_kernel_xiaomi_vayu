@@ -1,7 +1,8 @@
 #!bin/bash
 
 sudo apt-get update
-sudo apt update 
+sudo apt update
+sudo apt install device-tree-compiler
 sudo apt install ccache
 sudo apt install python2
 sudo apt-get install python2
